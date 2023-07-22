@@ -1,0 +1,9 @@
+syntax="proto3";
+package home;
+//option go_package="包路径（从mod）下开始写;别名";
+option go_package="grpc/pb/home;home";
+
+message Home{
+    string home_num=1;
+}
+

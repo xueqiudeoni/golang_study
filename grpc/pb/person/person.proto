@@ -1,0 +1,61 @@
+syntax="proto3";
+package person;
+//option go_package="包路径（从mod）下开始写;别名";
+option go_package="grpc/pb/person;person";
+//import "home/home.proto";
+import "google/api/annotations.proto";
+message Mbody{
+  string name=1;
+}
+message PersonReq{
+  string name=1;
+  int32 age=2;
+  Mbody Mbody=3;
+//  enum SEX{//枚举
+//    option allow_alias = true;
+//    MAN=0;
+//    WOMAN=1;
+//    GIRL=1;
+//    OTHER=2;
+//  }
+//  SEX sex=3;
+//  oneof TestOneOf{
+//    string one=4;
+//    string two=5;
+//    string three=6;
+//  }
+//  home.Home i_home=7;
+  /*
+  repeated string test=4;//切片的定义
+  map <string,string> test_map=5;//map定义key只能为int或string类型
+  reserved "test_map","test";//保留字
+  reserved 5;
+}*/
+/*嵌套
+message Home{
+  repeated Person persons=1;
+  message visitor{
+    string name=1;
+  }visitor v=2;
+
+ */
+}
+message PersonRes{
+  string name = 1;
+  int32 age = 2;
+  Mbody Mbody=3;
+
+}
+
+service SearchService{
+  rpc Search(PersonReq)returns(PersonRes){
+    option(google.api.http)={
+      get:"/api/person/{name}/{age}/{Mbody.name}",
+    };
+  };//传统即刻响应
+//  rpc SearchIn(stream PersonReq)returns(PersonRes);//入参为流
+//  rpc SearchOut(PersonReq)returns(stream PersonRes);//出参为流
+//  rpc SearchIO(stream PersonReq)returns(stream PersonRes);//出入均为流
+
+}
+
